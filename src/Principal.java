@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -7,7 +8,7 @@ public class Principal {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         LlamadaApi llamada = new LlamadaApi();
-        int opcionElegida = 1;
+        String opcionElegida;
         Historial historial = new Historial();
         Scanner sc = new Scanner(System.in);
         Conversor conversor = new Conversor();
@@ -32,41 +33,56 @@ public class Principal {
                 Elija una opción válida
                 *********************************************""";
 
-        while(true){
+        while(true) {
             System.out.println(mensajePrincipal);
-            opcionElegida = sc.nextInt();
+                opcionElegida = sc.next();
 
+                try{
+                   int opcion = Integer.valueOf(opcionElegida);
+                    if(opcion == 7){
 
-            if(opcionElegida == 7){
-
-                if(historial.getHistorial().isEmpty()) {
-                    System.out.println("Aún no ha realizado ninguna conversión.");
-                } else {
-                    System.out.println("""
+                        if(historial.getHistorial().isEmpty()) {
+                            System.out.println("Aún no ha realizado ninguna conversión.");
+                        } else {
+                            System.out.println("""
                             **********************************************
                             Historial""");
 
-                    for (String elemento : historial.getHistorial()) {
-                        System.out.println(elemento);
+                            for (String elemento : historial.getHistorial()) {
+                                System.out.println(elemento);
+                            }
+                        }
+
+                    } else if (opcion <= 0) {
+                        break;
+                    } else if (opcion == 8){
+                        break;
+                    } else if(opcion % 2 == 0) {
+                        int index = (opcion / 2) + 1;
+                        Moneda moneda = monedas.get(opcion - index);
+                        System.out.println("Indique la cantidad de " + moneda.getCodigo() + " que desea convertir a USD");
+                        double cantidad = sc.nextDouble();
+                        conversor.convertirMoneda(moneda, "a USD", cantidad, historial);
+                    } else {
+                        Moneda moneda = monedas.get(opcion/2);
+                        System.out.println("Indique la cantidad de USD que desea convertir a " + moneda.getCodigo());
+                        double cantidad = sc.nextDouble();
+                        conversor.convertirMoneda(moneda, "de USD", cantidad, historial);
                     }
+                } catch (NumberFormatException e){
+
+                    System.out.println("Solo se permiten números!");
                 }
 
-            } else if (opcionElegida <= 0) {
-                break;
-            } else if (opcionElegida == 8){
-                break;
-            } else if(opcionElegida % 2 == 0) {
-            int index = (opcionElegida / 2) + 1;
-            Moneda moneda = monedas.get(opcionElegida - index);
-            System.out.println("Indique la cantidad de " + moneda.getCodigo() + " que desea convertir a USD");
-            double cantidad = sc.nextDouble();
-            conversor.convertirMoneda(moneda, "a USD", cantidad, historial);
-        } else {
-            Moneda moneda = monedas.get(opcionElegida/2);
-            System.out.println("Indique la cantidad de USD que desea convertir a " + moneda.getCodigo());
-            double cantidad = sc.nextDouble();
-            conversor.convertirMoneda(moneda, "de USD", cantidad, historial);
-        }
+
+
+
+
+
+
+
+
+
 
 
 
