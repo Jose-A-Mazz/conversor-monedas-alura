@@ -1,5 +1,5 @@
-<h1>Java Currency Exchange Rate App</h1>
-<h2>This app converts a given set of currencies to and from USD consuming the <a href="https://www.exchangerate-api.com/">ExhangeRate-API</a></h2>
+<h1>Java Currency Exchange Rate App | ORACLE-ONE</h1>
+<h2>This app converts a given set of currencies to and from USD using the <a href="https://www.exchangerate-api.com/">ExhangeRate-API</a></h2>
 
 <strong>Instructions</strong>
 <ol>
